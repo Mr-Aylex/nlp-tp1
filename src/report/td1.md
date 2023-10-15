@@ -1,9 +1,11 @@
 Rapport 1
-Ce rapport va detaillé les differentes etapes de la premiere partie du TD1.
+Ce rapport va détailler les differentes etapes de la premiere partie du TD1.
 
-Dans un premier temps, nous avons mis en place un modele de RandomForestClassifier avec un CountVectorizer. Nous avons ensuite fait varier les parametres de ce modele (n_estimators, max_depth, max_features) et avons obtenu les resultats suivants :
+Les hypotèses sont que le prétraitement des données est important pour pouvoir faire une bonne classification.  
 
-Sans preprocessing des donnees :
+Dans un premier temps, nous avons mis en place un modele de RandomForestClassifier. Nous avons ensuite fait varier les type de préprocessing et avons obtenu les resultats suivants :
+
+Sans preprocessing des données :
 Got accuracy [82.0, 89.5, 96.5, 94.0, 94.9748743718593] with mean 91.39497487437185%
 
 Avec preprocessing des donnees (En supprimant les stop words et en stemmant les mots) :
@@ -21,7 +23,7 @@ Got accuracy [82.0, 88.5, 94.0, 93.0, 91.4572864321608] with mean 89.79145728643
 
 Par la suite nous avons mis en place un modele GradientBoostingClassifier
 
-Sans preprocessing des donnees :
+Sans preprocessing des données :
 Got accuracy [82.5, 93.5, 97.5, 95.5, 95.47738693467338] with mean 92.89547738693467% 
 
 Avec preprocessing des donnees (En supprimant les stop words et en stemmant les mots) :
@@ -36,3 +38,5 @@ Got accuracy [82.5, 94.5, 98.5, 96.0, 94.9748743718593] with mean 93.29497487437
 Avec uniquement la suppression de la ponctuation :
 Got accuracy [82.5, 93.0, 96.5, 97.0, 95.47738693467338] with mean 92.89547738693467% 
 
+
+On peut conclure que le préprocessing des données n'a que peut d'importance sur les résultats obtenus. En revanche, le modèle GradientBoostingClassifier est plus performant que le RandomForestClassifier.
