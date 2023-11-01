@@ -7,7 +7,7 @@ from sklearn.model_selection import cross_val_score
 from src.data.make_dataset import make_dataset
 from src.features.make_features import make_features
 from src.model.main import make_model, dump_model
-
+import logging
 
 @click.group()
 def cli():
@@ -19,13 +19,14 @@ def cli():
 @click.option("--input_filename", default="data/raw/train.csv", help="File training data")
 @click.option("--model_dump_filename", default="models/dump.json", help="File to dump model")
 def train(task, input_filename, model_dump_filename):
+    logging.info("lunching train")
     df = make_dataset(input_filename)
-    X, y = make_features(df, task)
-
-    model = make_model()
+    X, y = make_features(df, task, input_length=10)
+    model = make_model(task)
+    print("start training")
     model.fit(X, y)
 
-    return dump_model(model, model_dump_filename)
+    return None#dump_model(model, model_dump_filename)
 
 
 @click.command()
@@ -35,7 +36,7 @@ def train(task, input_filename, model_dump_filename):
 @click.option("--output_filename", default="data/processed/prediction.csv", help="Output file for predictions")
 def test(task, input_filename, model_dump_filename, output_filename):
     df = make_dataset(input_filename)
-    X, y = make_features(df, task)
+    X, y = make_features(df, task, pos_tagger=True, remove_punctuation=True)
 
     with open(model_dump_filename, "rb") as f:
         model = pickle.load(f)
@@ -65,7 +66,6 @@ def evaluate(task, input_filename, model):
     with open(model, "rb") as f:
         model = pickle.load(f)
 
-
     # Run k-fold cross validation. Print results
     return evaluate_model(model, X, y)
 
@@ -83,7 +83,6 @@ def evaluate_model(model, X, y):
 cli.add_command(train)
 cli.add_command(test)
 cli.add_command(evaluate)
-
 
 if __name__ == "__main__":
     cli()
